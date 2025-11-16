@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignInForm from './component/SignInForm';
 import SignUpForm from './component/SignUpForm';
 import Home from './component/Home';
