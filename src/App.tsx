@@ -1,6 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SignInForm from './component/SignInForm';
-import SignUpForm from './component/SignUpForm';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './component/Login';
 import Home from './component/Home';
 import './App.css';
 
@@ -8,9 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SignInForm />} />
-        <Route path="/signin" element={<SignInForm />} />
-        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
