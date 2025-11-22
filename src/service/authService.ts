@@ -102,3 +102,47 @@ export const signupUser = async (signupData: SignupData): Promise<AuthResponse> 
 export const logoutUser = (): void => {
   localStorage.removeItem('authToken');
 };
+
+/**
+ * Google login service - sends Google user data to backend
+ */
+export const googleLogin = async (googleUserData: {
+  email: string;
+  name: string;
+  googleId: string;
+  profilePicture?: string;
+}): Promise<AuthResponse> => {
+  try {
+    const response = await fetch(AUTH_API.GOOGLE_LOGIN.url, {
+      method: AUTH_API.GOOGLE_LOGIN.method,
+      headers: AUTH_API.GOOGLE_LOGIN.headers,
+      body: JSON.stringify(googleUserData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || 'Google login failed'
+      };
+    }
+
+    // Store token if provided
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+    }
+
+    return {
+      success: true,
+      data,
+      token: data.token
+    };
+  } catch (error) {
+    console.error('Google login error:', error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Network error occurred'
+    };
+  }
+};

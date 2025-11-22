@@ -27,5 +27,13 @@ export const AUTH_API = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
+  } as ApiEndpoint,
+  GOOGLE_LOGIN: {
+    url: `${BASE_URL}/skill-mint/google-login`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
   } as ApiEndpoint
 };
