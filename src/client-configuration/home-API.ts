@@ -21,7 +21,7 @@ export const AUTH_API = {
     }
   } as ApiEndpoint,
   SIGNUP: {
-    url: `${BASE_URL}/skill-mint/signup`,
+    url: `${BASE_URL}/skill-mint/login`, // Same endpoint, differentiated by newOne flag
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

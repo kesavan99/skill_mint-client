@@ -3,12 +3,14 @@ import { AUTH_API } from '../client-configuration/home-API';
 export interface LoginCredentials {
   email: string;
   password: string;
+  newOne: boolean;
 }
 
 export interface SignupData {
   name: string;
   email: string;
   password: string;
+  newOne: boolean;
 }
 
 export interface AuthResponse {
@@ -23,6 +25,7 @@ export interface AuthResponse {
  */
 export const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   try {
+    credentials.newOne = true;
     const response = await fetch(AUTH_API.LOGIN.url, {
       method: AUTH_API.LOGIN.method,
       headers: AUTH_API.LOGIN.headers,
@@ -62,6 +65,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
  */
 export const signupUser = async (signupData: SignupData): Promise<AuthResponse> => {
   try {
+    signupData.newOne = true;
     const response = await fetch(AUTH_API.SIGNUP.url, {
       method: AUTH_API.SIGNUP.method,
       headers: AUTH_API.SIGNUP.headers,
