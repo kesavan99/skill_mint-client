@@ -25,10 +25,11 @@ export interface AuthResponse {
  */
 export const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   try {
-    credentials.newOne = true;
+    credentials.newOne = false;
     const response = await fetch(AUTH_API.LOGIN.url, {
       method: AUTH_API.LOGIN.method,
       headers: AUTH_API.LOGIN.headers,
+      credentials: 'include',
       body: JSON.stringify(credentials)
     });
 
@@ -68,6 +69,7 @@ export const signupUser = async (signupData: SignupData): Promise<AuthResponse> 
     signupData.newOne = true;
     const response = await fetch(AUTH_API.SIGNUP.url, {
       method: AUTH_API.SIGNUP.method,
+      credentials: 'include',
       headers: AUTH_API.SIGNUP.headers,
       body: JSON.stringify(signupData)
     });
@@ -105,6 +107,8 @@ export const signupUser = async (signupData: SignupData): Promise<AuthResponse> 
  */
 export const logoutUser = (): void => {
   localStorage.removeItem('authToken');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userName');
 };
 
 /**
@@ -120,6 +124,7 @@ export const googleLogin = async (googleUserData: {
     const response = await fetch(AUTH_API.GOOGLE_LOGIN.url, {
       method: AUTH_API.GOOGLE_LOGIN.method,
       headers: AUTH_API.GOOGLE_LOGIN.headers,
+      credentials: 'include',
       body: JSON.stringify(googleUserData)
     });
 

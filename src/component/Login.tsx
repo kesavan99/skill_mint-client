@@ -77,8 +77,8 @@ const Login = () => {
 
     try {
       const result = isSignUp
-        ? await signupUser({ name, email, password })
-        : await loginUser({ email, password });
+        ? await signupUser({ name, email, password, newOne: true })
+        : await loginUser({ email, password, newOne: true });
 
       if (result.success) {
         // Redirect to Home page on success
@@ -104,9 +104,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-5" style={{ backgroundColor: '#ffffff' }}>
-      <div className="card w-full max-w-md animate-slide-in">
-        <div className="text-center mb-8">
+    <div className="flex items-center justify-center min-h-screen p-5" style={{ backgroundColor: '#ffffff' }}>
+      <div className="w-full max-w-md card animate-slide-in">
+        <div className="mb-8 text-center">
           <div className="flex justify-center mb-4">
             <img src="/logo.png" alt="SkillMint Logo" className="h-12" style={{ width: 'auto' }} />
           </div>
@@ -206,7 +206,7 @@ const Login = () => {
 
           <button 
             type="submit" 
-            className="btn btn-primary mt-3"
+            className="mt-3 btn btn-primary"
             disabled={loading}
           >
             {loading 
@@ -220,7 +220,7 @@ const Login = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 text-gray-500 bg-white">Or continue with</span>
             </div>
           </div>
 

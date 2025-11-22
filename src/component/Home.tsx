@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <header className="navbar">
-        <div className="max-w-7xl mx-auto px-5 py-5 flex justify-between items-center">
+        <div className="flex items-center justify-between px-5 py-5 mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="SkillMint Logo" className="h-10" style={{ width: 'auto' }} />
           </div>
@@ -20,43 +20,62 @@ const Home: React.FC = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-5 py-16">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-5 text-gray-900">Welcome to SkillMint! 🎉</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+      <main className="px-5 py-16 mx-auto max-w-7xl">
+        <div className="mb-16 text-center">
+          <h2 className="mb-5 text-5xl font-bold text-gray-900">Welcome to SkillMint! 🎉</h2>
+          <p className="max-w-2xl mx-auto text-lg text-gray-600">
             You have successfully logged in to your account.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
-          <div className="card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div className="text-5xl mb-5 text-center">📚</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Learn Skills</h3>
-            <p className="text-gray-600 text-base leading-relaxed text-center">
+        <div className="grid grid-cols-1 gap-8 mt-10 md:grid-cols-2 lg:grid-cols-3">
+          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+            <div className="mb-5 text-5xl text-center">📚</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Learn Skills</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
               Access a wide range of courses and tutorials to enhance your skills.
             </p>
           </div>
 
-          <div className="card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div className="text-5xl mb-5 text-center">🎯</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Track Progress</h3>
-            <p className="text-gray-600 text-base leading-relaxed text-center">
+          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+            <div className="mb-5 text-5xl text-center">🎯</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Track Progress</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
               Monitor your learning journey and achieve your goals.
             </p>
           </div>
 
-          <div className="card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div className="text-5xl mb-5 text-center">🏆</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Earn Certificates</h3>
-            <p className="text-gray-600 text-base leading-relaxed text-center">
+          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+            <div className="mb-5 text-5xl text-center">💻</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Code Editor</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
+              Practice coding with our interactive HackerRank-style code editor.
+            </p>
+          </div>
+
+          <div 
+            className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1"
+            onClick={() => window.location.href = '/resume-builder'}
+          >
+            <div className="mb-5 text-5xl text-center">📄</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Resume Builder</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
+              Create professional resumes with our easy-to-use builder.
+            </p>
+          </div>
+
+          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+            <div className="mb-5 text-5xl text-center">🏆</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Earn Certificates</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
               Complete courses and earn certificates to showcase your achievements.
             </p>
           </div>
 
-          <div className="card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div className="text-5xl mb-5 text-center">👥</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Join Community</h3>
-            <p className="text-gray-600 text-base leading-relaxed text-center">
+          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+            <div className="mb-5 text-5xl text-center">👥</div>
+            <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Join Community</h3>
+            <p className="text-base leading-relaxed text-center text-gray-600">
               Connect with learners worldwide and grow together.
             </p>
           </div>
