@@ -18,7 +18,10 @@ const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 mt-10 md:grid-cols-2 lg:grid-cols-3">
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div className="relative transition-all duration-300 cursor-not-allowed card opacity-60">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+              <span className="px-4 py-2 text-sm font-bold text-white bg-yellow-600 rounded-full">🚧 Under Development</span>
+            </div>
             <div className="mb-5 text-5xl text-center">📚</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Learn Skills</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
@@ -26,7 +29,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div 
+            className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1"
+            onClick={() => navigate('/track-progress')}
+          >
             <div className="mb-5 text-5xl text-center">🎯</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Track Progress</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
@@ -56,7 +62,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div className="relative transition-all duration-300 cursor-not-allowed card opacity-60">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+              <span className="px-4 py-2 text-sm font-bold text-white bg-yellow-600 rounded-full">🚧 Under Development</span>
+            </div>
             <div className="mb-5 text-5xl text-center">🏆</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Earn Certificates</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
@@ -64,7 +73,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div className="relative transition-all duration-300 cursor-not-allowed card opacity-60">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+              <span className="px-4 py-2 text-sm font-bold text-white bg-yellow-600 rounded-full">🚧 Under Development</span>
+            </div>
             <div className="mb-5 text-5xl text-center">👥</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Join Community</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
@@ -72,7 +84,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div className="relative transition-all duration-300 cursor-not-allowed card opacity-60">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+              <span className="px-4 py-2 text-sm font-bold text-white bg-yellow-600 rounded-full">🚧 Under Development</span>
+            </div>
             <div className="mb-5 text-5xl text-center">💼</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Job Insights</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
