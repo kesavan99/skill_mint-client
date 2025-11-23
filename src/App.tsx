@@ -4,6 +4,7 @@ import Login from './component/Login';
 import Home from './component/Home';
 import ResumeBuilder from './component/ResumeBuilder';
 import ResumePreview from './component/ResumePreview';
+import CodeEditor from './component/CodeEditor';
 import { initSessionTimeout } from './service/authService';
 import './App.css';
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/resume-builder" element={<ProtectedRoute><ResumeBuilder /></ProtectedRoute>} />
         <Route path="/preview" element={<ProtectedRoute><ResumePreview /></ProtectedRoute>} />
+        <Route path="/code-editor" element={<ProtectedRoute><CodeEditor /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

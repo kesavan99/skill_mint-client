@@ -34,7 +34,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1">
+          <div 
+            className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1"
+            onClick={() => navigate('/code-editor')}
+          >
             <div className="mb-5 text-5xl text-center">💻</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Code Editor</h3>
             <p className="text-base leading-relaxed text-center text-gray-600">
