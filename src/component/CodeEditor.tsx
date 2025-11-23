@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import Navbar from './Navbar';
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface DiffResult {
   additions: number;
@@ -13,7 +12,6 @@ interface DiffResult {
 }
 
 const CodeEditor: React.FC = () => {
-  const navigate = useNavigate();
   const editorRef = useRef<any>(null);
   const [code, setCode] = useState<string>('// Write your code here...');
   const [originalCode, setOriginalCode] = useState<string>('');

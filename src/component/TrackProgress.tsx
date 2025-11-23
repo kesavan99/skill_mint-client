@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
@@ -15,7 +15,7 @@ interface RoadmapStep {
 
 const TrackProgress: React.FC = () => {
   const navigate = useNavigate();
-  const [roadmapSteps, setRoadmapSteps] = useState<RoadmapStep[]>([
+  const [roadmapSteps] = useState<RoadmapStep[]>([
     {
       id: 1,
       title: 'Account Setup',
