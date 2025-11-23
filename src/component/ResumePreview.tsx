@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 const ResumePreview: React.FC = () => {
   const location = useLocation();
