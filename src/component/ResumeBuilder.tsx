@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -230,8 +231,13 @@ const ResumeBuilder: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Main Content */}
-      <div className={`py-8 transition-all duration-300 ${showAIAnalysis ? 'w-[70%]' : 'w-full'}`}>
+      {/* Navbar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white">
+        <Navbar />
+      </div>
+
+      {/* Main Content with top padding to account for fixed navbar */}
+      <div className={`py-8 pt-24 transition-all duration-300 ${showAIAnalysis ? 'w-[70%]' : 'w-full'}`}>
         <div className={`px-4 mx-auto ${showAIAnalysis ? '' : 'container'}`}>
           <div className={showAIAnalysis ? '' : 'max-w-4xl mx-auto'}>
           {/* Header */}

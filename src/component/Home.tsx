@@ -1,24 +1,13 @@
 import React from 'react';
-import { logoutUser } from '../service/authService';
+import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const Home: React.FC = () => {
-  const handleLogout = () => {
-    logoutUser();
-    window.location.href = '/login';
-  };
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="navbar">
-        <div className="flex items-center justify-between px-5 py-5 mx-auto max-w-7xl">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="SkillMint Logo" className="h-10" style={{ width: 'auto' }} />
-          </div>
-          <button onClick={handleLogout} className="btn btn-primary">
-            Logout
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="px-5 py-16 mx-auto max-w-7xl">
         <div className="mb-16 text-center">
@@ -55,7 +44,7 @@ const Home: React.FC = () => {
 
           <div 
             className="transition-all duration-300 cursor-pointer card hover:shadow-lg hover:-translate-y-1"
-            onClick={() => window.location.href = '/resume-builder'}
+            onClick={() => navigate('/resume-builder')}
           >
             <div className="mb-5 text-5xl text-center">📄</div>
             <h3 className="mb-4 text-xl font-semibold text-center text-gray-800">Resume Builder</h3>

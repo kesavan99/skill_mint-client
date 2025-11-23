@@ -112,6 +112,41 @@ export const logoutUser = (): void => {
 };
 
 /**
+ * Check if user is authenticated
+ */
+export const isAuthenticated = (): boolean => {
+  return !!localStorage.getItem('authToken');
+};
+
+/**
+ * Initialize session timeout checker
+ * Monitors for authentication errors and redirects to login
+ */
+export const initSessionTimeout = (): void => {
+  // Listen for storage events (logout from another tab)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'authToken' && !e.newValue) {
+      // Token was removed, redirect to login
+      window.location.href = '/login';
+    }
+  });
+
+  // Intercept fetch requests to check for 401 responses
+  const originalFetch = window.fetch;
+  window.fetch = async (...args) => {
+    const response = await originalFetch(...args);
+    
+    if (response.status === 401 && isAuthenticated()) {
+      // Session expired, logout and redirect
+      logoutUser();
+      window.location.href = '/login';
+    }
+    
+    return response;
+  };
+};
+
+/**
  * Google login service - sends Google user data to backend
  */
 export const googleLogin = async (googleUserData: {
