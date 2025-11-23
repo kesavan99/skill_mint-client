@@ -300,7 +300,7 @@ const ResumeBuilder: React.FC = () => {
                   placeholder="Full Name *"
                   value={resumeData.personalInfo.name}
                   onChange={(e) => handlePersonalInfoChange('name', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
                 />
                 <input
@@ -308,7 +308,7 @@ const ResumeBuilder: React.FC = () => {
                   placeholder="Email *"
                   value={resumeData.personalInfo.email}
                   onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
                 />
                 <input
@@ -316,7 +316,7 @@ const ResumeBuilder: React.FC = () => {
                   placeholder="Phone *"
                   value={resumeData.personalInfo.phone}
                   onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
                 />
                 <input
@@ -324,7 +324,7 @@ const ResumeBuilder: React.FC = () => {
                   placeholder="Location *"
                   value={resumeData.personalInfo.location}
                   onChange={(e) => handlePersonalInfoChange('location', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
                 />
                 <input
@@ -332,14 +332,14 @@ const ResumeBuilder: React.FC = () => {
                   placeholder="LinkedIn URL"
                   value={resumeData.personalInfo.linkedin}
                   onChange={(e) => handlePersonalInfoChange('linkedin', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
                 <input
                   type="url"
                   placeholder="Portfolio URL"
                   value={resumeData.personalInfo.portfolio}
                   onChange={(e) => handlePersonalInfoChange('portfolio', e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
             </section>
@@ -353,7 +353,7 @@ const ResumeBuilder: React.FC = () => {
                 placeholder="Write a brief summary about yourself..."
                 value={resumeData.summary}
                 onChange={(e) => setResumeData(prev => ({ ...prev, summary: e.target.value }))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 rows={4}
               />
             </section>
@@ -371,28 +371,28 @@ const ResumeBuilder: React.FC = () => {
                       placeholder="Degree"
                       value={edu.degree}
                       onChange={(e) => handleArrayFieldChange('education', index, 'degree', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                     <input
                       type="text"
                       placeholder="Institution"
                       value={edu.institution}
                       onChange={(e) => handleArrayFieldChange('education', index, 'institution', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                     <input
                       type="text"
                       placeholder="Year (e.g., 2020-2024)"
                       value={edu.year}
                       onChange={(e) => handleArrayFieldChange('education', index, 'year', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                     <input
                       type="text"
                       placeholder="GPA (optional)"
                       value={edu.gpa}
                       onChange={(e) => handleArrayFieldChange('education', index, 'gpa', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                   {resumeData.education.length > 1 && (
@@ -426,28 +426,28 @@ const ResumeBuilder: React.FC = () => {
                       placeholder="Job Title"
                       value={exp.title}
                       onChange={(e) => handleArrayFieldChange('experience', index, 'title', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                     <input
                       type="text"
                       placeholder="Company"
                       value={exp.company}
                       onChange={(e) => handleArrayFieldChange('experience', index, 'company', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     />
                     <input
                       type="text"
                       placeholder="Duration (e.g., Jan 2022 - Present)"
                       value={exp.duration}
                       onChange={(e) => handleArrayFieldChange('experience', index, 'duration', e.target.value)}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 md:col-span-2"
+                      className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 md:col-span-2"
                     />
                   </div>
                   <textarea
                     placeholder="Job Description"
                     value={exp.description}
                     onChange={(e) => handleArrayFieldChange('experience', index, 'description', e.target.value)}
-                    className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     rows={3}
                   />
                   {resumeData.experience.length > 1 && (
@@ -480,7 +480,7 @@ const ResumeBuilder: React.FC = () => {
                   value={skillInput}
                   onChange={(e) => setSkillInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && addSkill()}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  className="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                 />
                 <button
                   onClick={addSkill}
@@ -519,13 +519,13 @@ const ResumeBuilder: React.FC = () => {
                     placeholder="Project Name"
                     value={proj.name}
                     onChange={(e) => handleArrayFieldChange('projects', index, 'name', e.target.value)}
-                    className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                   />
                   <textarea
                     placeholder="Project Description"
                     value={proj.description}
                     onChange={(e) => handleArrayFieldChange('projects', index, 'description', e.target.value)}
-                    className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                     rows={2}
                   />
                   <input
@@ -533,7 +533,7 @@ const ResumeBuilder: React.FC = () => {
                     placeholder="Technologies Used"
                     value={proj.technologies}
                     onChange={(e) => handleArrayFieldChange('projects', index, 'technologies', e.target.value)}
-                    className="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                   />
                   {resumeData.projects.length > 1 && (
                     <button

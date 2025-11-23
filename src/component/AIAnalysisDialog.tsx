@@ -63,7 +63,7 @@ const AIAnalysisDialog: React.FC<AIAnalysisDialogProps> = ({ isOpen, onClose, re
     setError(null);
 
     try {
-      const API_URL = mport.meta.env.VITE_API_BASE_URL;
+      const API_URL = import.meta.env.VITE_API_BASE_URL;
       
       const response = await fetch(`${API_URL}/api/resume/analyze`, {
         method: 'POST',
