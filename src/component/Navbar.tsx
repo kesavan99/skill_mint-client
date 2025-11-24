@@ -7,6 +7,9 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     logoutUser();
+    // Clear resume data on logout
+    localStorage.removeItem('resumeData');
+    localStorage.removeItem('selectedTemplate');
     navigate('/login');
   };
 

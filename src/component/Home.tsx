@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+
+  // Clear resume data when returning to home
+  useEffect(() => {
+    localStorage.removeItem('resumeData');
+    localStorage.removeItem('selectedTemplate');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

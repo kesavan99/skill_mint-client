@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -55,23 +55,36 @@ interface AnalysisResult {
 
 const ResumeBuilder: React.FC = () => {
   const navigate = useNavigate();
-  const [resumeData, setResumeData] = useState<ResumeData>({
-    personalInfo: {
-      name: '',
-      email: '',
-      phone: '',
-      location: '',
-      linkedin: '',
-      portfolio: ''
-    },
-    summary: '',
-    education: [{ degree: '', institution: '', year: '', gpa: '' }],
-    experience: [{ title: '', company: '', duration: '', description: '' }],
-    skills: [],
-    projects: [{ name: '', description: '', technologies: '' }],
-    certifications: []
-  });
+  
+  // Initialize resumeData from localStorage if available
+  const getInitialResumeData = (): ResumeData => {
+    const stored = localStorage.getItem('resumeData');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return {
+      personalInfo: {
+        name: '',
+        email: '',
+        phone: '',
+        location: '',
+        linkedin: '',
+        portfolio: ''
+      },
+      summary: '',
+      education: [{ degree: '', institution: '', year: '', gpa: '' }],
+      experience: [{ title: '', company: '', duration: '', description: '' }],
+      skills: [],
+      projects: [{ name: '', description: '', technologies: '' }],
+      certifications: []
+    };
+  };
 
+  const getInitialTemplate = (): string => {
+    return localStorage.getItem('selectedTemplate') || 'resume-template';
+  };
+
+  const [resumeData, setResumeData] = useState<ResumeData>(getInitialResumeData());
   const [skillInput, setSkillInput] = useState<string>('');
   const [uploadStatus, setUploadStatus] = useState<{ type: 'success' | 'error' | 'loading'; message: string } | null>(null);
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
@@ -80,6 +93,25 @@ const ResumeBuilder: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>(getInitialTemplate());
+
+  const templates = [
+    { id: 'resume-template', name: 'Classic Professional', description: 'Traditional format with clean layout', recommended: true },
+    { id: 'resume-template-minimalist', name: 'Minimalist Modern', description: 'Clean design with whitespace focus' },
+    { id: 'resume-template-two-column', name: 'Two-Column Accent', description: 'Sidebar layout with blue accent' },
+    { id: 'resume-template-executive', name: 'Executive Traditional', description: 'Conservative style for senior roles' },
+    { id: 'resume-template-skills-first', name: 'Skills-First Hybrid', description: 'Emphasizes technical competencies' },
+    { id: 'resume-template-creative', name: 'Creative Infographic', description: 'Visual elements with gradient design' },
+  ];
+
+  // Save to localStorage whenever resumeData or selectedTemplate changes
+  useEffect(() => {
+    localStorage.setItem('resumeData', JSON.stringify(resumeData));
+  }, [resumeData]);
+
+  useEffect(() => {
+    localStorage.setItem('selectedTemplate', selectedTemplate);
+  }, [selectedTemplate]);
 
   // Handle PDF upload
   const handlePdfUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +214,35 @@ const ResumeBuilder: React.FC = () => {
 
   // Preview resume
   const handlePreview = () => {
-    navigate('/preview', { state: { resumeData } });
+    navigate('/preview', { state: { resumeData, selectedTemplate } });
+  };
+
+  // Preview template with blank data
+  const handleTemplatePreview = async () => {
+    const blankData = {
+      personalInfo: {
+        name: 'John Doe',
+        email: 'johndoe@email.com',
+        phone: '(123) 456-7890',
+        location: 'City, State',
+        linkedin: 'linkedin.com/in/johndoe',
+        portfolio: 'johndoe.com'
+      },
+      summary: 'Experienced professional with expertise in various domains. Skilled in problem-solving, team collaboration, and delivering high-quality results.',
+      education: [
+        { degree: 'Bachelor of Science in Computer Science', institution: 'University Name', year: '2018-2022', gpa: '3.8' }
+      ],
+      experience: [
+        { title: 'Software Engineer', company: 'Tech Company Inc.', duration: 'Jan 2022 - Present', description: 'Developed and maintained web applications using modern technologies.' }
+      ],
+      skills: ['JavaScript', 'React', 'Node.js', 'Python', 'SQL', 'Git'],
+      projects: [
+        { name: 'Project Name', description: 'Built a full-stack application with real-time features', technologies: 'React, Node.js, MongoDB' }
+      ],
+      certifications: ['AWS Certified Developer', 'Google Cloud Professional']
+    };
+    
+    navigate('/preview', { state: { resumeData: blankData, selectedTemplate, isPreview: true } });
   };
 
   // Handle AI Analysis
@@ -285,6 +345,52 @@ const ResumeBuilder: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Template Selection Section */}
+          <div className="p-6 mb-6 bg-white rounded-lg shadow-md">
+            <div className="mb-4">
+              <h2 className="text-xl font-bold text-gray-800">Choose Resume Template</h2>
+              <p className="text-sm text-gray-600">Select a professional template that matches your style</p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {templates.map((template) => (
+                <div
+                  key={template.id}
+                  onClick={() => setSelectedTemplate(template.id)}
+                  className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    selectedTemplate === template.id
+                      ? 'border-primary-600 bg-primary-50'
+                      : 'border-gray-200 hover:border-primary-300'
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex flex-col">
+                      <h3 className="font-semibold text-gray-800">{template.name}</h3>
+                      {template.recommended && (
+                        <span className="mt-1 text-xl font-semibold text-green-800">✨ Recommended</span>
+                      )}
+                    </div>
+                    {selectedTemplate === template.id && (
+                      <svg className="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600">{template.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={handleTemplatePreview}
+                className="px-4 py-2 text-sm font-semibold transition-colors border-2 rounded-lg text-primary-600 border-primary-600 hover:bg-primary-50"
+              >
+                👁️ Preview Template
+              </button>
+            </div>
           </div>
 
           {/* Form */}
