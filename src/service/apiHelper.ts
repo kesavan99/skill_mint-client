@@ -11,17 +11,10 @@ export const authenticatedFetch = async (
   url: string,
   options: RequestInit = {}
 ): Promise<Response> => {
-  const token = localStorage.getItem('authToken');
-  
   const defaultHeaders: HeadersInit = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
-  
-  // Add authorization header if token exists
-  if (token) {
-    defaultHeaders['Authorization'] = `Bearer ${token}`;
-  }
   
   // Merge headers
   const headers = {

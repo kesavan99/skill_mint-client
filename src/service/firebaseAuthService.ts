@@ -66,7 +66,6 @@ export const getGoogleRedirectResult = async (): Promise<UserCredential | null> 
 export const signOutFirebase = async (): Promise<void> => {
   try {
     await signOut(auth);
-    localStorage.removeItem('authToken');
   } catch (error) {
     console.error('Error signing out:', error);
     throw error;

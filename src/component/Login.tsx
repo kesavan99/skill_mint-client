@@ -19,11 +19,6 @@ const Login = () => {
       const result = await signInWithGooglePopup();
       const user = result.user;
       
-      // Get the ID token from Firebase
-      const idToken = await user.getIdToken();
-      
-      // Store token in localStorage
-      localStorage.setItem('authToken', idToken);
       localStorage.setItem('userEmail', user.email || '');
       localStorage.setItem('userName', user.displayName || '');
       

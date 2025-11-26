@@ -185,3 +185,31 @@ export const googleLogin = async (googleUserData: { email: string; name: string;
     return { success: false, message: error instanceof Error ? error.message : 'Network error occurred' };
   }
 };
+
+// -------------------- Session Timeout Helper --------------------
+export const initSessionTimeout = (timeoutMs: number = 30 * 60 * 1000) => {
+  let timer: number | undefined;
+
+  const logoutAndRedirect = () => {
+    window.location.href = '/login';
+  };
+
+  const resetTimer = () => {
+    if (timer) window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      logoutAndRedirect();
+    }, timeoutMs) as unknown as number;
+  };
+
+  const events = ['click', 'keydown', 'mousemove', 'scroll', 'touchstart'];
+  events.forEach((ev) => window.addEventListener(ev, resetTimer));
+
+  // Start the timer
+  resetTimer();
+
+  // Return cleanup
+  return () => {
+    if (timer) window.clearTimeout(timer);
+    events.forEach((ev) => window.removeEventListener(ev, resetTimer));
+  };
+};

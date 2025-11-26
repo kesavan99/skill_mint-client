@@ -6,18 +6,18 @@ import ResumeBuilder from './component/ResumeBuilder';
 import ResumePreview from './component/ResumePreview';
 import CodeEditor from './component/CodeEditor';
 import TrackProgress from './component/TrackProgress';
-import { initSessionTimeout } from './service/authService';
+import { initSessionTimeout, AuthProvider, useAuth } from './service/authService';
 import './App.css';
 
-// Protected Route wrapper
+// Protected Route wrapper using Auth context
 const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
-  const isAuthenticated = localStorage.getItem('authToken');
+  const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 // Auth Route wrapper (redirects to home if already logged in)
 const AuthRoute = ({ children }: { children: React.ReactElement }) => {
-  const isAuthenticated = localStorage.getItem('authToken');
+  const { isAuthenticated } = useAuth();
   return isAuthenticated ? <Navigate to="/home" replace /> : children;
 };
 
@@ -28,7 +28,8 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
@@ -38,7 +39,8 @@ function App() {
         <Route path="/code-editor" element={<ProtectedRoute><CodeEditor /></ProtectedRoute>} />
         <Route path="/track-progress" element={<ProtectedRoute><TrackProgress /></ProtectedRoute>} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
