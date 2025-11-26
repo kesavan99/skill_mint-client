@@ -31,6 +31,8 @@ interface AuthContextType {
   googleLoginFunc: (data: { email: string; name: string; googleId: string; profilePicture?: string }) => Promise<boolean>;
   logout: () => void;
   isAuthenticated: boolean;
+  // `isLoading` is true while the provider validates the session with server
+  isLoading: boolean;
 }
 
 // -------------------- Context --------------------
@@ -44,6 +46,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // On mount, check session with server to restore auth state from HttpOnly cookie
   useEffect(() => {
@@ -61,6 +64,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       } catch (err) {
         // silent
+      }
+      finally {
+        setIsLoading(false);
       }
     };
 
@@ -113,7 +119,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, signup, googleLoginFunc, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ token, login, signup, googleLoginFunc, logout, isAuthenticated, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

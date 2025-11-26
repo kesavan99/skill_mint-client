@@ -11,13 +11,16 @@ import './App.css';
 
 // Protected Route wrapper using Auth context
 const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  // While checking auth status, don't redirect — avoid flicker.
+  if (isLoading) return null;
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 // Auth Route wrapper (redirects to home if already logged in)
 const AuthRoute = ({ children }: { children: React.ReactElement }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return null;
   return isAuthenticated ? <Navigate to="/home" replace /> : children;
 };
 
