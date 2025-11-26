@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../service/authService';
+import { useAuth } from "../service/authService";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    logoutUser();
+    logout();
     // Clear resume data on logout
     localStorage.removeItem('resumeData');
     localStorage.removeItem('selectedTemplate');

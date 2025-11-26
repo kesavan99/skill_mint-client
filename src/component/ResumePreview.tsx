@@ -46,9 +46,15 @@ const ResumePreview: React.FC = () => {
   const generatePreview = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/api/resume/preview`, 
-        { ...resumeData, template: selectedTemplate }, 
-        { headers: { 'Content-Type': 'application/json' } }
+      const response = await axios.post(
+        `${API_URL}/api/resume/preview`,
+        { ...resumeData, template: selectedTemplate },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
       );
       setPreviewHTML(response.data);
     } catch (error) {

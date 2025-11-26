@@ -61,10 +61,16 @@ const CodeEditor: React.FC = () => {
 
     setIsFormatting(true);
     try {
-      const response = await axios.post(`${API_URL}/api/code/format`, {
-        code,
-        language,
-      });
+      const response = await axios.post(
+        `${API_URL}/api/code/format`,
+        {
+          code,
+          language,
+        },
+        {
+          withCredentials: true
+        }
+      );
 
       setCode(response.data.formattedCode);
     } catch (error) {
@@ -80,10 +86,16 @@ const CodeEditor: React.FC = () => {
 
     setIsLinting(true);
     try {
-      const response = await axios.post(`${API_URL}/api/code/lint`, {
-        code,
-        language,
-      });
+      const response = await axios.post(
+        `${API_URL}/api/code/lint`,
+        {
+          code,
+          language,
+        },
+        {
+          withCredentials: true
+        }
+      );
 
       setLintErrors(response.data.errors || []);
     } catch (error) {
@@ -101,10 +113,16 @@ const CodeEditor: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/api/code/diff`, {
-        originalCode,
-        modifiedCode: code,
-      });
+      const response = await axios.post(
+        `${API_URL}/api/code/diff`,
+        {
+          originalCode,
+          modifiedCode: code,
+        },
+        {
+          withCredentials: true
+        }
+      );
 
       setDiffResult(response.data);
       setShowDiff(true);

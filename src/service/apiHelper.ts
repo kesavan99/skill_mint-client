@@ -1,3 +1,8 @@
+import axios from 'axios';
+
+// Ensure axios sends cookies by default for cross-site requests
+axios.defaults.withCredentials = true;
+
 /**
  * Helper function to make authenticated API requests
  * Automatically includes credentials (cookies) and authorization header

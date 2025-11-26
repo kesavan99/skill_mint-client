@@ -132,7 +132,8 @@ const ResumeBuilder: React.FC = () => {
       const response = await axios.post(`${API_URL}/api/resume/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        withCredentials: true
       });
 
       // Update form with parsed data
@@ -258,6 +259,7 @@ const ResumeBuilder: React.FC = () => {
     try {
       const response = await fetch(`${API_URL}/api/resume/analyze`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -320,7 +322,7 @@ const ResumeBuilder: React.FC = () => {
                 Upload PDF
                 <input
                   type="file"
-                  accept=".pdf"
+                  accept="application/pdf,.pdf"
                   onChange={handlePdfUpload}
                   className="hidden"
                 />
