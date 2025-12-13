@@ -6,6 +6,10 @@ import ResumeBuilder from './component/ResumeBuilder';
 import ResumePreview from './component/ResumePreview';
 import CodeEditor from './component/CodeEditor';
 import TrackProgress from './component/TrackProgress';
+import EmailVerification from './component/EmailVerification';
+import EmailConfirmation from './component/EmailConfirmation';
+import SetPassword from './component/SetPassword';
+import GooglePasswordSetup from './component/GooglePasswordSetup';
 import { initSessionTimeout, AuthProvider, useAuth } from './service/authService';
 import './App.css';
 
@@ -36,6 +40,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+        <Route path="/login/token" element={<EmailConfirmation />} />
+        <Route path="/email-verification" element={<EmailVerification />} />
+        <Route path="/set-password" element={<SetPassword />} />
+        <Route path="/google-set-password" element={<GooglePasswordSetup />} />
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/resume-builder" element={<ProtectedRoute><ResumeBuilder /></ProtectedRoute>} />
         <Route path="/preview" element={<ProtectedRoute><ResumePreview /></ProtectedRoute>} />

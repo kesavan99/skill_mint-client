@@ -3,6 +3,8 @@ import {
   signInWithRedirect,
   getRedirectResult,
   signOut,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
   type User,
   type UserCredential
 } from 'firebase/auth';
@@ -86,3 +88,31 @@ export const getCurrentUser = (): User | null => {
 export const onAuthStateChanged = (callback: (user: User | null) => void) => {
   return auth.onAuthStateChanged(callback);
 };
+
+/**
+ * Create a new user with email and password and send verification email
+ * @param email User's email
+ * @param verificationUrl Custom verification URL to include in email
+ * @returns Promise with user credentials
+ */
+export const createUserWithEmail = async (email: string, verificationUrl: string): Promise<UserCredential> => {
+  try {
+    // Create user in Firebase with a temporary password
+    const tempPassword = 'TempPassword123!';
+    const userCredential = await createUserWithEmailAndPassword(auth, email, tempPassword);
+    
+    // Send verification email with custom URL
+    const actionCodeSettings = {
+      url: verificationUrl,
+      handleCodeInApp: true,
+    };
+    
+    await sendEmailVerification(userCredential.user, actionCodeSettings);
+    
+    return userCredential;
+  } catch (error) {
+    console.error('Error creating user with email:', error);
+    throw error;
+  }
+};
+

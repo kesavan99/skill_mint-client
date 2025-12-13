@@ -186,9 +186,9 @@
   /* Input Components */
   .input {
     @apply w-full px-3 py-2 rounded-md transition-all duration-200;
-    background: #ffffff;
+    background: #ffffff !important;
     border: 2px solid #e2e8f0;
-    color: #1a1a1a;
+    color: #1a1a1a !important;
     font-size: 1rem;
     font-weight: 400;
   }
@@ -203,9 +203,23 @@
   }
   
   .input:disabled {
-    background: #f7fafc;
+    background: #f7fafc !important;
     color: #a0aec0;
     @apply cursor-not-allowed;
+  }
+  
+  /* Override browser autofill styles */
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus,
+  .input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+  
+  /* Ensure password input text is always black */
+  input[type="password"] {
+    color: #1a1a1a !important;
   }
   
   /* Card Components */

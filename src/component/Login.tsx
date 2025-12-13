@@ -1,15 +1,30 @@
-import { useState, type FormEvent } from 'react';
-import { loginUser, signupUser } from '../service/authService';
-import { signInWithGooglePopup } from '../service/firebaseAuthService';
+import { useState, useEffect, type FormEvent } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../service/authService';
+import { signInWithGooglePopup, createUserWithEmail } from '../service/firebaseAuthService';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { login, signup } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    // Check if redirected after email verification
+    if (searchParams.get('verified') === 'true') {
+      setSuccess('Email verified successfully! You can now login.');
+    }
+  }, [searchParams]);
 
   const handleGoogleSignIn = async () => {
     setError('');
@@ -19,18 +34,34 @@ const Login = () => {
       const result = await signInWithGooglePopup();
       const user = result.user;
       
-      localStorage.setItem('userEmail', user.email || '');
-      localStorage.setItem('userName', user.displayName || '');
-      
-      // You can also send this token to your backend for verification
-      console.log('Google Sign-In successful:', {
-        email: user.email,
-        name: user.displayName,
-        uid: user.uid
+      // Send Google sign-in data to backend
+      const response = await fetch(`${BASE_URL}/skill-mint/google-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ 
+          email: user.email, 
+          name: user.displayName,
+          googleId: user.uid
+        })
       });
-      
-      // Redirect to home page
-      window.location.href = '/home';
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 'success') {
+        // Check if user needs to set a password
+        if (data.needsPassword) {
+          // New Google user - redirect to password setup page
+          navigate(`/google-set-password?email=${encodeURIComponent(user.email || '')}&name=${encodeURIComponent(user.displayName || '')}`);
+        } else {
+          // Existing user - store data and redirect to home with full page reload
+          localStorage.setItem('userEmail', user.email || '');
+          localStorage.setItem('userName', user.displayName || '');
+          window.location.href = '/home';
+        }
+      } else {
+        setError(data.message || 'Google sign-in failed. Please try again.');
+      }
     } catch (err) {
       console.error('Google Sign-In error:', err);
       if (err instanceof Error) {
@@ -54,6 +85,9 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
+    // Prevent multiple submissions
+    if (loading || isSubmitting) return;
+
     if (isSignUp) {
       // Validate passwords match
       if (password !== confirmPassword) {
@@ -66,26 +100,80 @@ const Login = () => {
         setError('Password must be at least 6 characters long.');
         return;
       }
-    }
 
-    setLoading(true);
+      // Handle signup with email verification
+      setLoading(true);
+      setIsSubmitting(true);
+      try {
+        console.log('Starting signup process...');
+        
+        // Register user in backend with status = 'inactive'
+        const response = await fetch(`${BASE_URL}/skill-mint/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ 
+            name, 
+            email, 
+            password,
+            newOne: true 
+          })
+        });
 
-    try {
-      const result = isSignUp
-        ? await signupUser({ name, email, password, newOne: true })
-        : await loginUser({ email, password, newOne: true });
+        const data = await response.json();
 
-      if (result.success) {
-        // Redirect to Home page on success
-        window.location.href = '/home';
-      } else {
-        setError(result.message || `${isSignUp ? 'Signup' : 'Login'} failed. Please try again.`);
+        if (response.ok && data.status === 'success') {
+          console.log('Backend user created successfully');
+          
+          // Get verification token from response
+          const token = data.data.verificationToken;
+          
+          try {
+            // Create user in Firebase and send custom verification email
+            const verificationUrl = `${window.location.origin}/login/token?email=${encodeURIComponent(email)}&token=${token}`;
+            await createUserWithEmail(email, verificationUrl);
+            console.log('Firebase email sent successfully');
+          } catch (firebaseErr: any) {
+            console.warn('Firebase email creation warning:', firebaseErr);
+            // Continue even if Firebase fails - user is already created in backend
+          }
+
+          // Redirect to email verification page
+          navigate(`/email-verification?email=${encodeURIComponent(email)}`);
+        } else {
+          setError(data.message || 'Signup failed. Please try again.');
+          setLoading(false);
+          setIsSubmitting(false);
+        }
+      } catch (err: any) {
+        console.error('Signup error:', err);
+        if (err.code === 'auth/email-already-in-use') {
+          setError('This email is already registered. Please login instead.');
+        } else {
+          setError('Failed to create account. Please try again.');
+        }
+        setLoading(false);
+        setIsSubmitting(false);
+      } finally {
+        // Don't reset here if navigation is happening
       }
-    } catch (err) {
-      setError('An unexpected error occurred.');
-      console.error(`${isSignUp ? 'Signup' : 'Login'} error:`, err);
-    } finally {
-      setLoading(false);
+    } else {
+      // Handle login
+      setLoading(true);
+      try {
+        const success = await login(email, password);
+
+        if (success) {
+          navigate('/home');
+        } else {
+          setError('Login failed. Please check your credentials.');
+        }
+      } catch (err) {
+        setError('An unexpected error occurred.');
+        console.error('Login error:', err);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -111,6 +199,12 @@ const Login = () => {
         </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          {success && (
+            <div className="p-4 mb-4 text-sm rounded-lg bg-green-50 border border-green-200" style={{ color: '#19B86B' }}>
+              {success}
+            </div>
+          )}
+          
           {error && (
             <div className="banner-error animate-shake">
               {error}
@@ -202,7 +296,7 @@ const Login = () => {
           <button 
             type="submit" 
             className="mt-3 btn btn-primary"
-            disabled={loading}
+            disabled={loading || isSubmitting}
           >
             {loading 
               ? (isSignUp ? 'Creating account...' : 'Signing in...') 

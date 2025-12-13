@@ -51,6 +51,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // On mount, check session with server to restore auth state from HttpOnly cookie
   useEffect(() => {
     const checkSession = async () => {
+      // Skip session check for public routes
+      const publicRoutes = ['/login/token', '/email-verification', '/set-password', '/google-set-password'];
+      const currentPath = window.location.pathname;
+      
+      if (publicRoutes.some(route => currentPath.startsWith(route))) {
+        setIsLoading(false);
+        return;
+      }
+      
       try {
         const res = await fetch(`${BASE_URL}/skill-mint/check`, {
           method: 'GET',
